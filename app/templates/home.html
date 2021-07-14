@@ -1,0 +1,18 @@
+<div class="login">
+    <center>
+
+    <h1> MOVIE GENRE PREDICTION </h1><br>
+
+    <form method="POST", action="{{url_for('predict')}}">
+
+        <b> Enter Movie Synopsis :  </b>
+        <br>
+        <textarea type = "text" name="synopsis" rows="14" cols="100" wrap="soft" required ='required' > </textarea>
+ <br><br><br></b>
+        <button type="submit" class="'btn">Predict</button>
+    </form>
+        <br>
+        <br>
+        {{ prediction }}
+</center>
+</div>

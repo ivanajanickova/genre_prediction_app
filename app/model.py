@@ -16,6 +16,7 @@ class NLPModel():
         self.clf = OneVsRestClassifier(sgd)
         self.vectorizer = TfidfVectorizer()
         self.mlb = MultiLabelBinarizer(sparse_output=True)
+        self.y = None
 
     def encode_classes(self, data):
         # Encode the movie genres as dummy
@@ -26,9 +27,9 @@ class NLPModel():
                 columns=self.mlb.classes_,
                 index=data.index))
 
-        y = data.iloc[:, 3:]
+        self.y = data.iloc[:, 3:]
 
-        return y
+        return self.y
 
     def text_processing(self, data):
         # Explore For Noise
@@ -65,4 +66,5 @@ class NLPModel():
 model = NLPModel()
 model.train('~/Projects/movie_prediction/genre_prediction_app/data/train.csv')
 pickle.dump(model.clf, open('model.pkl', 'wb'))
+pickle.dump(model.y, open('classes.pkl', 'wb'))
 pickle.dump(model.vectorizer, open('vectorizer.pkl', 'wb'))

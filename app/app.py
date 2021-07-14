@@ -4,29 +4,30 @@ from flask_restful import request
 import pickle
 from predict import Prediction
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 
 # Initialize model object
 model = pickle.load(open('model.pkl', 'rb'))
 vectorizer = pickle.load(open('vectorizer.pkl', 'rb'))
+y = pickle.load(open('classes.pkl', 'rb'))
 
 
 @app.route('/')
-def man():
-    return render_template('~/Projects/movie_prediction/genre_prediction_app/templates/home.html')
+def home():
+    return render_template('home.html')
 
 
 @app.route('/predict', methods=['POST'])
-def post_predict():
+def predict():
     # Predicts top five genres for POSTed test.csv file
-    prediction = Prediction(model, vectorizer)
+    prediction = Prediction(model, vectorizer, y)
     data = request.form['synopsis']
 
     # Load the train csv file as a DataFrame
     X = prediction.text_processing(data)
-    X = prediction.vectorizer_transform(np.array(X))
+    X = prediction.vectorizer_transform(X)
     pred = prediction.predict(X)
-    return render_template('~/Projects/movie_prediction/genre_prediction_app/templates/prediction.html', data=pred)
+    return render_template('home.html', prediction = pred)
 
 
 if __name__ == '__main__':
