@@ -12,11 +12,14 @@ class Prediction():
 
     def text_processing(self, data):
         # Explore For Noise
-        nt.TextFrame(data).noise_scan()
+        data.synopsis.apply(lambda x: nt.TextFrame(x).noise_scan())
         # Explore For Noise
-        nt.TextExtractor(data).extract_stopwords()
+        data.synopsis.apply(lambda x: nt.TextExtractor(x).extract_stopwords())
         # Explore For Noise
-        X = nfx.remove_stopwords(data)
+        data.synopsis.apply(nfx.remove_stopwords)
+
+        X = data.synopsis.apply(nfx.remove_stopwords)
+
         return X
 
     def vectorizer_transform(self, X):

@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-import numpy as np
+import pandas as pd
 from flask_restful import request
 import pickle
 from predict import Prediction
@@ -19,15 +19,15 @@ def home():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    # Predicts top five genres for POSTed test.csv file
+    # Predicts top three genres for a provided synopsis
     prediction = Prediction(model, vectorizer, y)
     data = request.form['synopsis']
-
-    # Load the train csv file as a DataFrame
+    # transform the text to data frame - input for the vectorizer
+    data = pd.DataFrame({'synopsis': data}, index=[0])
     X = prediction.text_processing(data)
     X = prediction.vectorizer_transform(X)
     pred = prediction.predict(X)
-    return render_template('home.html', prediction = pred)
+    return render_template('home.html', prediction=pred)
 
 
 if __name__ == '__main__':
