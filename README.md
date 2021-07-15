@@ -1,6 +1,6 @@
 # Movie genre predicion 
 
-This app uses summaries of a movie to predict a movie genre using NLP. It returns a three genres predicted for a given summary. It was trained using `train.csv` (data/train.csv). It is deployed with heroku and uses Flask framework. The app can be found on: https://genre-pred.herokuapp.com/ 
+This app uses summaries of a movie to predict a movie genre using NLP. It returns a three genres predicted for a given summary. It was trained using `train.csv` (data/train.csv). It is deployed with heroku and uses Flask framework. *The App will be soon deployed on Heroku* The app can be found on: https://genre-pred.herokuapp.com/ 
 
 ### `model.py`
 
